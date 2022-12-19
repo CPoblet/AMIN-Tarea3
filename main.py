@@ -25,9 +25,11 @@ def generate_roulette(t, n):
 
 def random_solution(n):
     solution = np.zeros(n, dtype=int)
-    for i in range(0, len(solution)):
+    """ for i in range(0, len(solution)):
         r = np.random.choice([0, 1])
-        solution[i] = r
+        solution[i] = r """
+    i = np.random.randint(0, n)
+    solution[i] = 1
     return solution
 
 def generate_fitness(price, weight):
@@ -40,7 +42,6 @@ def test_fitness(price, weight, solution):
     fitness = np.zeros_like(price, dtype=float)
     norm_p = np.full_like(price, price)
     norm_p = norm_p/(np.amax(price)+1)
-    carga = evaluation(solution, price, weight)
     for i in range(len(solution)):
         carga_i = evaluation(solution, price, weight)
         if solution[i] == 1:
@@ -94,22 +95,20 @@ def main(argv):
     #print(data)
     #print(params_data)
     n = params_data[0]
+    c = params_data[1]
     roulette = generate_roulette(t, n)
     #print(roulette)
     best_solution = random_solution(n)
     eva_best_solution = evaluation(best_solution, data[0], data[1])
     #print(solution)
 
-    if eva_best_solution[1] > 1000:
-        best_solution = np.zeros(n, dtype=int)
-        eva_best_solution = evaluation(best_solution, data[0], data[1])
-
     fitness = generate_fitness(data[0], data[1])
     #print(fitness)
 
     #print(fitness_sorted)
     count = -1
-    while eva_best_solution[0] != 8373:
+    #eva_best_solution[0] != 8373
+    while count < iter:
         count += 1
         fitness = test_fitness(data[0], data[1], best_solution)
         fitness_sorted = sort_fitness(fitness)
@@ -120,7 +119,7 @@ def main(argv):
         x = int(fitness_sorted[0][j])
         solution[x] = np.absolute(solution[x]-1)
         eva_solution = evaluation(solution, data[0], data[1])
-        if eva_solution[1] < 1000:
+        if eva_solution[1] <= c:
             best_solution = solution
             eva_best_solution = eva_solution
     print(count)
