@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import sys
+import csv
+
+#py main.py 0 100000 1.4
 
 def generate_roulette(t, n):
     probability = np.arange(1, n+1)
@@ -85,17 +88,19 @@ def main(argv):
     seed = int(argv[1])
     iter = int(argv[2])
     t = float(argv[3])
+    input_file = argv[4]
+    output_file = argv[5]
     print(argv)
     np.random.seed(seed=seed)
     np.set_printoptions(suppress=True)
     # price, weight
     # z,c
-    data = pd.read_csv('knapPI_1_50_1000.csv', skiprows=5, delimiter=',', header=None, nrows=50, usecols=[1, 2, 3]).transpose().to_numpy()
-    params_data = pd.read_csv('knapPI_1_50_1000.csv', skiprows=1, delim_whitespace=True, header=None, nrows=3, usecols=[1]).to_numpy()
+    params_data = pd.read_csv(input_file, skiprows=1, delim_whitespace=True, header=None, nrows=3, usecols=[1]).to_numpy()
     #print(data)
     #print(params_data)
-    n = params_data[0]
-    c = params_data[1]
+    n = int(params_data[0])
+    c = int(params_data[1])
+    data = pd.read_csv(input_file, skiprows=5, delimiter=',', header=None, nrows=n, usecols=[1, 2, 3]).transpose().to_numpy()
     roulette = generate_roulette(t, n)
     #print(roulette)
     best_solution = random_solution(n)
@@ -122,9 +127,15 @@ def main(argv):
         if eva_solution[1] <= c:
             best_solution = solution
             eva_best_solution = eva_solution
-    print(count)
     print(best_solution)
     print(eva_best_solution)
+    with open(output_file, newline='') as f:
+        r = csv.reader(f)
+        data = [line for line in r]
+    with open(output_file, 'w', newline='') as f:
+        w = csv.writer(f)
+        w.writerows(data)
+        w.writerow([t, eva_best_solution[0]])
 
 if __name__ == '__main__':
     main(sys.argv)
