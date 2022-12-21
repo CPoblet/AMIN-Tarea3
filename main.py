@@ -28,11 +28,11 @@ def generate_roulette(t, n):
 
 def random_solution(n):
     solution = np.zeros(n, dtype=int)
-    """ for i in range(0, len(solution)):
+    for i in range(0, len(solution)):
         r = np.random.choice([0, 1])
-        solution[i] = r """
-    i = np.random.randint(0, n)
-    solution[i] = 1
+        solution[i] = r
+    """ i = np.random.randint(0, n)
+    solution[i] = 1 """
     return solution
 
 def generate_fitness(price, weight):
@@ -65,7 +65,7 @@ def sort_fitness(fitness):
         max = np.amax(fitness)
         index = np.where(fitness == max)
         fitness[index] = min-1
-        fitness_sorted[0][i] = index[0]
+        fitness_sorted[0][i] = index[0][0]
         fitness_sorted[1][i] = max
     return fitness_sorted
 
@@ -106,11 +106,10 @@ def main(argv):
     best_solution = random_solution(n)
     eva_best_solution = evaluation(best_solution, data[0], data[1])
     #print(solution)
+    if eva_best_solution[1] > c:
+        best_solution = np.zeros(n, dtype=int)
+        eva_best_solution = evaluation(best_solution, data[0], data[1])
 
-    fitness = generate_fitness(data[0], data[1])
-    #print(fitness)
-
-    #print(fitness_sorted)
     count = -1
     #eva_best_solution[0] != 8373
     while count < iter:
