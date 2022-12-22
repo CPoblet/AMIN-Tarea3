@@ -35,12 +35,6 @@ def random_solution(n):
     solution[i] = 1 """
     return solution
 
-def generate_fitness(price, weight):
-    fitness = np.zeros_like(price, dtype=float)
-    for i in range(len(fitness)):
-        fitness[i] = price[i]/weight[i]
-    return fitness
-
 def test_fitness(price, weight, solution):
     fitness = np.zeros_like(price, dtype=float)
     norm_p = np.full_like(price, price)
