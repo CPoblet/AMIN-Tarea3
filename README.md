@@ -35,12 +35,12 @@ Una vez instaladas se deberá ir a la pestaña archivo y abrir la carpeta descom
 
 Esto instalará el numpy el cual es necesario para la ejecución del programa, una vez finalizado escribir en la terminal el siguiente sin comillas:
 
-- "python main.py semilla tamaño_tablero tamaño_población probabilidad_cruza probabilidad_mutación número_iteraciones"
+- "python main.py semilla iteraciones tau archivo_entrada.csv archivo_salida.csv"
 ~~~ 
- python main.py 1 8 40 90 5 40
+ python main.py 0 100000 1.4 archivo_entrada.csv archivo_salida.csv
 ~~~
 
-Los argumentos (semilla tamaño_tablero tamaño_población probabilidad_cruza probabilidad_mutación número_iteraciones) deben ser numero enteros positivos.
+Los argumentos (emilla iteraciones tau) deben ser numero enteros positivos.
 ## Este programa fue realizado en 🛠️
 * [Visual Studio Code](https://code.visualstudio.com) - Visual Studio Code es un editor de código fuente desarrollado por Microsoft para Windows, Linux, macOS y Web.
 * [Python 3.10.0](https://www.python.org/downloads/release/python-3100/) - Lenguaje de programación.
